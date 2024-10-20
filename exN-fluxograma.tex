@@ -1,20 +1,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Criação de Fluxograma usando LaTeX
 %
-% Assunto: escrever aqui um comentário com uma
-%          breve explicação do exercício
+% Assunto: Jogo do Coringa, implementação de um fluxograma para escolha de objetos
+%          e resultados baseados na lógica do jogo.
 %
 % Autores:
-%     Nome do Aluno 1
-%     Nome do Aluno 2
-%     Nome do Aluno 3
+%     Erik Guimarães de Souza
+%     Thaísa Ribeiro Pimentel
+%
 %
 % Coordenação:
 %     Prof. Dr. Ruben Carlo Benante
 %
 % Data: 2024-04-25
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Para gerar o PDF use o comando make com o makefile configurado:
@@ -25,7 +24,6 @@
 %    $ pdflatex exN-fluxograma.tex -o exN-fluxograma.pdf
 %    $ bibtex biblio
 %    $ pdflatex exN-fluxograma.tex -o exN-fluxograma.pdf
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % preambulo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,18 +38,15 @@
 \usepackage{graphicx} % permite adicionar imagens
 \usepackage{indentfirst} % indenta o primeiro parágrafo também
 \usepackage{url} % permite adicionar links de URLs e emails
-% \usepackage{natbib}
-%[noend]
 
-\DeclareUrlCommand\email{\urlstyle{mm}} % comando para email bonito
-\floatname{algorithm}{Algoritmo} % tradução da palavra algoritimo no ambiente de índice
+\DeclareUrlCommand\email{\urlstyle{tt}} % comando para email formatado
 
-\usetikzlibrary{shapes.geometric, shapes.symbols,arrows} % ajuste do tikz para incluir formas e setas
+\usetikzlibrary{shapes.geometric, arrows} % ajuste do tikz para incluir formas e setas
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % capa %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Fluxograma: nome do fluxograma}
-\author{Autor1 \\ Autor2 \\ Autor3}
+\title{Fluxograma: Jogo do Coringa}
+\author{Érik Guimarães de Souza \\ Thaísa Ribeiro Pimentel}
 
 \begin{document}
 
@@ -59,101 +54,67 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % definicao dos blocos do fluxograma (tikz) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\tikzstyle{line} = [draw, -latex']
-\tikzstyle{startend} = [draw, ellipse,fill=red!20, minimum height=2em, node distance=1.55cm]
-\tikzstyle{print} = [tape, fill=blue!20, draw, draw=black, minimum width=3cm, minimum height=1.4cm, text width=4.5em, text centered, tape bend top=none, tape bend height=0.2cm, node distance=1.55cm]
-\tikzstyle{input} = [trapezium, trapezium left angle=60, trapezium right angle=90, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30, node distance=1.95cm]
-\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30, node distance=1.55cm]
-
-\tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=5em, text centered, rounded corners, minimum height=4em, node distance=1.55cm]
-\tikzstyle{decisionb} = [diamond, draw, fill=blue!20, text width=4.5em, text badly centered, inner sep=0pt, node distance=1.55cm]
-\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30, node distance=2.25cm]
-\tikzstyle{empty} = [circle, fill=white, minimum width=0.01mm, node distance=2.55cm]
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % resumo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{abstract}
 
-\textbf{Assunto:} Programa tal tal
+\textbf{Assunto:} Programa do jogo do Coringa
 
-% descrever em poucas palavras seu projeto aqui
-
-O programa tal e tal faz isso e isso. Neste artigo iremos apresentar o seu fluxograma completo
-% e (opcionalmente) o seu algoritmo.
-
-Após a modelagem do fluxograma e desenvolvimento da lógica de programação em algoritmo,
-o programa será implementado na Linguagem de Programação \texttt{C}
-
+O programa simula um pequeno jogo em que o jogador deve escolher entre dois objetos. Dependendo da escolha, o jogador vence ou perde. Neste artigo, apresentamos o fluxograma completo do jogo.
 
 \textbf{Local:} Escola Politécnica de Pernambuco - UPE/POLI
 
-\textbf{Órgão Financiador:} N/A
-
 \textbf{Caracterização:} Modelagem, Projeto e Implementação de Software em Linguagem \texttt{C}
-
-% Este é o fim do resumo.
 
 \end{abstract}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% artigo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % seção de introdução %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introdução}
 
-% Descrever melhor seu projeto aqui
-
-Este programa faz isso, isso e \texttt{também em fonte mono-espaçada faz isso}.
-
-O programa será modelado em \textit{fluxograma} em uma primeira fase, em seguida
-sua lógica será desenvolvida em formato de \textit{algoritmo}, para então
-na terceira fase ser implementado em Linguagem de Programação \texttt{C}.
-
-Exemplo de letra em \textit{itálico é com textit}, e em \textbf{bold face é com textbf} e \texttt{tal tal tal é mono-espaçada type-writer}.
+Este projeto consiste na modelagem de um jogo simples utilizando fluxograma, onde o jogador escolhe entre dois objetos. Baseado em sua escolha, o jogo define se o jogador venceu ou perdeu. O fluxograma será implementado em uma fase inicial e, posteriormente, a lógica será codificada em \texttt{C}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% seção de objetivos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% seção de fluxograma %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fluxograma}
 
-% adicionar aqui o fluxograma
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
 
-\begin{tikzpicture}
-    % colocar nodos
-    \node (inicio) [startend] {Inicio};
-    \node (txta) [print, below of=inicio] {Texto A};
-    \node (inp1) [input, below of=txta] {objeto};
-    \node (tot1) [process, below of=inp1] {total $\leftarrow$ objeto + 1};
-    \node (maior) [decision, below of=tot1] {total $>$ M};
-    \node (sim) [print, right of=maior, node distance=4cm] {Total estourou};
-    \node (nao) [print, below of=maior, node distance=2.4cm] {Total ok};
-    \node (fim) [startend, below of=nao] {Fim};
-    % \node (vazio1) [empty, right of=fim, node distance=4cm] {};
-    % Desenhar as setas
-    \path [line] (inicio) -- (txta);
-    \path [line] (txta) -- (inp1);
-    \path [line] (inp1) -- (tot1);
-    \path [line] (tot1) -- (maior);
-    \path [line] (maior) -- (sim);
-    \path [line] (sim) -- (vazio1) -- (fim);
-    \path [line] (maior) -- (nao);
-    \path [line] (nao) -- (fim);
+% Nodes
+\node (start) [startstop] {Início};
+\node (welcome) [process, below of=start] {Seja bem-vindo ao jogo do Coringa};
+\node (choose) [process, below of=welcome] {Escolha um objeto: \\
+Buzina = 1 \\
+Taco de baseball = 2};
+\node (decision1) [decision, below of=choose, yshift=-1cm] {objeto == 2};
+\node (lose) [process, right of=decision1, xshift=3cm] {Você perdeu};
+\node (decision2) [decision, below of=decision1, yshift=-2cm] {objeto == 1};
+\node (verb) [process, below of=decision2] {Verbo == "Usar"};
+\node (magic) [process, below of=verb] {A buzina era mágica e você venceu};
+\node (lost) [process, right of=verb, xshift=3cm] {Você perdeu};
+
+% Arrows
+\draw [arrow] (start) -- (welcome);
+\draw [arrow] (welcome) -- (choose);
+\draw [arrow] (choose) -- (decision1);
+\draw [arrow] (decision1) -- node[anchor=south] {Sim} (lose);
+\draw [arrow] (decision1) -- node[anchor=east] {Não} (decision2);
+\draw [arrow] (decision2) -- node[anchor=south] {Sim} (verb);
+\draw [arrow] (decision2) -- node[anchor=south] {Não} (lose);
+\draw [arrow] (verb) -- node[anchor=south] {Sim} (magic);
+\draw [arrow] (verb) -- node[anchor=south] {Não} (lost);
+
 \end{tikzpicture}
+\end{center}
 
-
-
-\clearpage % inicia próxima seção em nova página
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% seção de justificativa %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Algoritmo}
-
-% adicionar aqui o algoritmo (opcional)
-
-
-% \clearpage % inicia próxima seção em nova página
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Autores %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% seção de autores %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Detalhamento dos Autores}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -161,62 +122,19 @@ Exemplo de letra em \textit{itálico é com textit}, e em \textbf{bold face é c
 \subsection*{Discentes}
 
 \begin{enumerate}
-    \item \textbf{Nome Completo:} Fulano de Tal Um
+    \item \textbf{Nome Completo:} Erik Guimarães de Souza
     \begin{description}
-        \item [Email:] \email{blabla@poli.br}
-        \item [Endereço:]
-        \item [Matrícula:]
-        \item [CPF:]
-        \item [RG:]
-        \item [Telefone:]
-        \item [Currículo Lattes:] \url{http://lattes.cnpq.br/nnnnn}
+        \item [Email:] \email{egs5@poli.br}
+
+        \item
     \end{description}
 
-    \item \textbf{Nome Completo:} Fulano de Qual Dois
+    \item \textbf{Nome Completo:} Thaísa Ribeiro Pimentel
     \begin{description}
-        \item [Email:] \email{blabla@poli.br}
-        \item [Endereço:]
-        \item [Matrícula:]
-        \item [CPF:]
-        \item [RG:]
-        \item [Telefone:]
-        \item [Currículo Lattes:] \url{http://lattes.cnpq.br/nnnnn}
+        \item [Email:] \email{trp@poli.br}
+        \item
     \end{description}
-
-    \item \textbf{Nome Completo:} Fulano de Como Três
-    \begin{description}
-        \item [Email:] \email{blabla@poli.br}
-        \item [Endereço:]
-        \item [Matrícula:]
-        \item [CPF:]
-        \item [RG:]
-        \item [Telefone:]
-        \item [Currículo Lattes:] \url{http://lattes.cnpq.br/nnnnn}
-    \end{description}
-
-    % \item \textbf{Nome Completo:} Fulano de tal
-    % \begin{description}
-        % \item [Email:] \email{blabla@poli.br}
-        % \item [Endereço:]
-        % \item [Matrícula:]
-        % \item [CPF:]
-        % \item [RG:]
-        % \item [Telefone:]
-        % \item [Currículo Lattes:] \url{http://lattes.cnpq.br/nnnnn}
-    % \end{description}
-
-%     \item \textbf{Nome Completo:} Fulano de tal
-%     \begin{description}
-%         \item [Email:] \email{blabla@poli.br}
-%         \item [Endereço:]
-%         \item [Matrícula:]
-%         \item [CPF:]
-%         \item [RG:]
-%         \item [Telefone:]
-%         \item [Currículo Lattes:] \url{http://lattes.cnpq.br/nnnnn}
-%     \end{description}
 \end{enumerate}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Docentes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -226,37 +144,15 @@ Exemplo de letra em \textit{itálico é com textit}, e em \textbf{bold face é c
     \item \textbf{Nome Completo:} Ruben Carlo Benante
     \begin{description}
         \item [Email:] \email{rcb@upe.br}
-        \item [Matrícula:] 11238-0
         \item [Currículo Lattes:] \url{http://lattes.cnpq.br/3366717378277623}
     \end{description}
 \end{enumerate}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % referências bibliográficas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section*{Referências Bibliográficas}
-
-% cite todos, mesmo os não referenciados %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\nocite{*}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% se necessario %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% troca autor and autor por autor & autor, na bibliografia. O dcu usa "and"
-%\renewcommand{\harvardand}{\&} % troca and pro &. O dcu usa "and"
-
-% Estilos de bibliografia %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \bibliographystyle{abnt-alf} % Estilo alfabético da ABNT. Opção [num] para estilo numérico
-% \bibliographystyle{apalike}
-% \bibliographystyle{dcu} %citacao como (autor and autor, ano). Parece apalike. Rev. Control. Automacao. Use com harvard
-% \bibliographystyle{agsm} % padrao harvard fica (autor & autor ano).
 \bibliographystyle{acm}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% arquivo de banco de dados das referências %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% renomear para o número do exercício correto
-% o arquivo de bibliografia pode se chamar qualquer coisa, isso não muda o comando de gerar o PDF.
-% Por exemplo para 'mybiblio.bib', use \bibliography{mybiblio} e os comandos pdflatex e bibtex continuam os mesmos identicos com exN.
 \bibliography{biblio}
 
+
 \end{document}
+
