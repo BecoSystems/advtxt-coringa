@@ -133,4 +133,37 @@ fim
 /* rodapé de configuração do vim                                          */
 /* vi: set ai et ts=4 sw=4 tw=0 wm=0 fo=croql : C config for Vim modeline */
 /* Template by Dr. Beco <rcb at beco dot cc> Version 20160612.142044      */
+/* ---------------------------------------------------------------------- */
+inicio
+// Função que simula o uso da buzina
+    função UsarBuzina(){
+    escreva("Você usou a buzina! Ela é mágica e mandou o Batman para outra dimensão. \n")
+    escreva("Mas ele estava podre e quebra quando você tenta usar - O Batman pegou você!\n")
+    }
+
+    função inicio() {
+    inteiro escolha
+
+    escreva("O Coringa está tentando fugir do Batman!/n")
+    escreva ("Escolha um objeto para usar:\n")
+    escreva("1. Buzina.\n")
+    escreva("2. taco de Beisebol. \n")
+    leia(escolha)
+
+    // Estrutura de escolha para decidir a ação do usuário
+    escolha {
+        caso 1:
+        usarbuzina()
+        pare
+
+        caso 2:
+        usarTaco()
+        pare
+
+        // Mensagem de erro para opção inválida
+        default:
+        escreva("Escolha inválida! O Batman te pega enquantop você hesita!\n")
+        }
+     }
+     fim
 
