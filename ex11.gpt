@@ -139,18 +139,18 @@ fim
     escreva("Você usou a buzina! Ela é mágica e mandou o Batman para outra dimensão. \n")
     escreva("Mas ele estava podre e quebra quando você tenta usar - O Batman pegou você!\n")
     }
-    inicio
+    início
 
     inteiro escolha
 
-    escreva("O Coringa está tentando fugir do Batman!/n")
-    escreva ("Escolha um objeto para usar:\n")
+    escreva("O Coringa está tentando fugir do Batman!/n");
+    escreva ("Escolha um objeto para usar:\n");
     escreva("1. Buzina.\n")
-    escreva("2. taco de Beisebol. \n")
-    leia(escolha)
+    escreva("2. taco de Beisebol. \n");
+    leia(escolha);
 
     // Estrutura de escolha para decidir a ação do usuário
-    escolha {
+    escolha:
         caso 1:
         usarbuzina()
         pare
@@ -161,7 +161,6 @@ fim
 
         // Mensagem de erro para opção inválida
         default:
-        escreva("Escolha inválida! O Batman te pega enquantop você hesita!\n")
-        }
+        escreva("Escolha inválida! O Batman te pega enquantop você hesita!\n");
          fim
 
